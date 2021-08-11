@@ -2,4 +2,5 @@
 
 It a a quiz app which contains 300 mcq questions.
 
-![dwa](https://user-images.githubusercontent.com/79399095/128408500-76c45a3b-a73d-4f6e-8949-d0b1720e4803.jpg)
+![Untitled](https://user-images.githubusercontent.com/79399095/129048890-c3bc3c44-9e1a-4780-b9fe-8065c2e77f84.png)
+
