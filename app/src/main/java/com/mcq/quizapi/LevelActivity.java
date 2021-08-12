@@ -88,6 +88,22 @@ public class LevelActivity extends AppCompatActivity {
             }
         });
 
+        binding.timerBased.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                assert name != null;
+                if (!server)
+                {
+                    Toast.makeText(getApplicationContext(), "Serve is offline. Try again later.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Intent i = new Intent(LevelActivity.this, DynamicQuizActivity.class);
+                i.putExtra("name", name);
+                i.putExtra("level", "3");
+                startActivity(i);
+            }
+        });
+
 
     }
     public void playAnimations()

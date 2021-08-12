@@ -24,7 +24,7 @@
     <string name="hard">Set 3</string>
     <string name="each">Each set contains 10 questions.</string>
     <string name="leave">Leave</string>
-    <string name="dynamic">Time Based</string>
+    <string name="dynamic">Adaptive</string>
     <string name="remaining">Seconds Remaining</string>
 
     <string name="total_incorrect">Incorrect Answers :</string>

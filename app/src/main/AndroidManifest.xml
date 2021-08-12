@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mcq.quizapi">
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuizAPI">
-        <activity android:name=".ResultActivity"></activity>
+        <activity android:name=".DynamicQuizActivity"></activity>
+        <activity android:name=".ResultActivity" />
         <activity android:name=".QuizActivity" />
         <activity android:name=".LevelActivity" />
         <activity android:name=".SelectQuizActivity" />

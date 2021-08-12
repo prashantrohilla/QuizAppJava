@@ -1,38 +1,28 @@
 package com.mcq.quizapi;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
-import com.mcq.quizapi.Api.ApiClient;
-import com.mcq.quizapi.Api.ApiInterface;
 import com.mcq.quizapi.Models.QuestionModel;
-import com.mcq.quizapi.Response.GetQuestionsResponse;
 import com.mcq.quizapi.databinding.ActivityQuizBinding;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-public class QuizActivity extends AppCompatActivity {
+public class DynamicQuizActivity extends AppCompatActivity {
 
     ActivityQuizBinding binding;
     Animation translate, ntranslate, scale;
     static boolean op1 = false, op2 = false, op3 = false, op4 = false;
     int score = 0;
+    int dscore = 0;
     List<QuestionModel> questionsList;
     int position = 0;
     int p = 1;
@@ -49,15 +39,15 @@ public class QuizActivity extends AppCompatActivity {
 
         String name = getIntent().getStringExtra("name");
         String level = getIntent().getStringExtra("level");
-        if (level.equals("1")) {
-            position = 0;
-        }
-        if (level.equals("2")) {
-            position = 10;
-        }
-        if (level.equals("3")) {
-            position = 20;
-        }
+//        if (level.equals("1")) {
+//            position = 0;
+//        }
+//        if (level.equals("2")) {
+//            position = 10;
+//        }
+//        if (level.equals("3")) {
+//            position = 20;
+//        }
 
         if (name.equals("c")) {
             questionsList = SelectQuizActivity.cquestionsList;
@@ -189,8 +179,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 timer.cancel();
-                Intent i = new Intent(QuizActivity.this, ResultActivity.class);
-               // i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                Intent i = new Intent(DynamicQuizActivity.this, ResultActivity.class);
                 i.putExtra("score", score);
                 startActivity(i);
                 finish();
@@ -207,7 +196,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private void checkQuestion() {
         if (!op1 & !op2 & !op3 & !op4) {
-            Toast.makeText(QuizActivity.this, "No option selected!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DynamicQuizActivity.this, "No option selected!!", Toast.LENGTH_SHORT).show();
         }
 
         String option1 = binding.option1.getText().toString();
@@ -219,6 +208,7 @@ public class QuizActivity extends AppCompatActivity {
         if (op1) {
             if (option1.equals(correctOption)) {
                 score++;
+                dscore++;
                 Toast.makeText(getApplicationContext(), "Correct Option", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getApplicationContext(), "Incorrect !!. Correct Option is " + correctOption, Toast.LENGTH_SHORT).show();
@@ -227,6 +217,7 @@ public class QuizActivity extends AppCompatActivity {
         if (op2) {
             if (option2.equals(correctOption)) {
                 score++;
+                dscore++;
                 Toast.makeText(getApplicationContext(), "Correct Option", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getApplicationContext(), "Incorrect !!. Correct Option is " + correctOption, Toast.LENGTH_SHORT).show();
@@ -235,6 +226,7 @@ public class QuizActivity extends AppCompatActivity {
         if (op3) {
             if (option3.equals(correctOption)) {
                 score++;
+                dscore++;
                 Toast.makeText(getApplicationContext(), "Correct Option", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getApplicationContext(), "Incorrect !!. Correct Option is " + correctOption, Toast.LENGTH_SHORT).show();
@@ -243,6 +235,7 @@ public class QuizActivity extends AppCompatActivity {
         if (op4) {
             if (option4.equals(correctOption)) {
                 score++;
+                dscore++;
                 Toast.makeText(getApplicationContext(), "Correct Option", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getApplicationContext(), "Incorrect !!. Correct Option is " + correctOption, Toast.LENGTH_SHORT).show();
@@ -265,8 +258,7 @@ public class QuizActivity extends AppCompatActivity {
             setQuestions();
         } else {
             timer.cancel();
-            Intent i = new Intent(QuizActivity.this, ResultActivity.class);
-          //  i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            Intent i = new Intent(DynamicQuizActivity.this, ResultActivity.class);
             i.putExtra("score", score);
             startActivity(i);
             finish();
@@ -275,6 +267,8 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void setQuestions() {
+
+        checkList();
         String question = questionsList.get(position).getQuestion();
         String option1 = questionsList.get(position).getOption1();
         String option2 = questionsList.get(position).getOption2();
@@ -350,6 +344,82 @@ public class QuizActivity extends AppCompatActivity {
         binding.option2.startAnimation(ntranslate);
         binding.option3.startAnimation(translate);
         binding.option4.startAnimation(ntranslate);
+    }
+
+    public void checkList()
+    {
+        if(p==3)
+        {
+            if(dscore==1)
+            {
+                position+=10;
+            }
+            if(dscore==2)
+            {
+                position+=20;
+            }
+            dscore=0;
+        }
+
+        if(p==5)
+        {
+            if(dscore==0)
+            {
+                if(position>10 && position<20){ position-=10; }
+                if(position>20){ position-=20; }
+            }
+            if(dscore==1)
+            {
+                if(position<10){ position+=10; }
+                if(position>10 && position<20){ position+=10; }
+            }
+            if(dscore==2)
+            {
+                if(position<10){ position+=20; }
+                if(position>10 && position<20){ position+=10; }
+            }
+            dscore=0;
+        }
+
+        if(p==7)
+        {
+            if(dscore==0)
+            {
+                if(position>10 && position<20){ position-=10; }
+                if(position>20){ position-=20; }
+            }
+            if(dscore==1)
+            {
+                if(position<10){ position+=10; }
+                if(position>10 && position<20){ position+=10; }
+            }
+            if(dscore==2)
+            {
+                if(position<10){ position+=20; }
+                if(position>10 && position<20){ position+=10; }
+            }
+            dscore=0;
+        }
+
+        if(p==9)
+        {
+            if(dscore==0)
+            {
+                if(position>10 && position<20){ position-=10; }
+                if(position>20){ position-=20; }
+            }
+            if(dscore==1)
+            {
+                if(position<10){ position+=10; }
+                if(position>10 && position<20){ position+=10; }
+            }
+            if(dscore==2)
+            {
+                if(position<10){ position+=20; }
+                if(position>10 && position<20){ position+=10; }
+            }
+            dscore=0;
+        }
     }
 
 }
