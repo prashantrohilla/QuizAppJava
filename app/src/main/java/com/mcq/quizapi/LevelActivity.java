@@ -113,6 +113,7 @@ public class LevelActivity extends AppCompatActivity {
         binding.easy.startAnimation(translate);
         binding.medium.startAnimation(ntranslate);
         binding.hard.startAnimation(translate);
+        binding.timerBased.startAnimation(ntranslate);
     }
 
 }
